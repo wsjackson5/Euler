@@ -30,6 +30,22 @@ def getPrimes(limit):						#Implement Sieve of Eratosthenes, return all primes u
 	print("- %s seconds -" % (time.time() - startTime))
 	return primes
 
+def checkNumber(n):
+	while n:
+		if n % 10 == 2 or n % 10 == 4 or n % 10 == 5 or n % 10 == 6 or n % 10 == 8:
+			return True
+	n /= 10
+	return False
+
+def checkCircs(numbers):
+	remove = []
+	for i, x in enumerate(numbers):
+		if checkNumber(x):
+			remove.append(i)
+	array.insert(0, 5)
+	array.insert(0, 2)
+	return remove
+
 def circ(i):				#Return circulars of a number, in a list of integers.
 	j = str(i)
 	n = (len(j) - 1)
@@ -42,7 +58,10 @@ def circ(i):				#Return circulars of a number, in a list of integers.
 	return circs
 
 def circularPrimes(limit):				#Find number of circular primes up to limit. (Takes ~300 seconds for 1,000,000)
-	primes = getPrimes(limit)
+	allPrimes = getPrimes(limit)
+	Primes = [x for x in allPrimes if x not in checkCircs(allPrimes)]
+	print(len(allPrimes))
+	print(len(Primes))
 	bools = [False] * len(primes)
 	startTime = time.time()
 	for i in range (0, len(primes)):		#Iterate each prime number.
@@ -85,4 +104,3 @@ plt.show(block=False)
 limitCircular = 1000000
 circularCount = circularPrimes(limitCircular)
 print("Number of circular primes under" , limitCircular,":" , str(len(circularCount)) , "\n")
-
